@@ -8,6 +8,7 @@ public class Student {
 
     public Student(String n, String p, String g) {
         nume = n;
+        prenume = p;
         grupa = g;
 
         java.util.Random rand = new java.util.Random();
@@ -43,5 +44,37 @@ public class Student {
 
     public ArrayList<Integer> getNote() {
         return note;
+    }
+
+    public int medie() {
+        Double medie = (double) 0;
+        for(Integer i: this.note) {
+            medie += i;
+        }
+        medie /= note.size();
+
+        return (int) Math.round(medie);
+    }
+
+    public boolean esteIntegralist() {
+        boolean integralist = true;
+        for(Integer i : note) {
+            if (i < 5) {
+                integralist = false;
+                break;
+            }
+        }
+        return integralist;
+    }
+
+    public int getNrRestante() {
+        int contor = 0;
+        for(Integer i : note) {
+            if(i < 5) {
+                contor++;
+            }
+        }
+
+        return contor;
     }
 }

@@ -74,61 +74,43 @@ public class Main {
     public void ex2()  {
         ArrayList<Student> studentList = new ArrayList<>();
 
-        studentList.add(new Student("Popescu","Marius", "TI"));
-        studentList.add(new Student("Stanciu","Anca", "ISM"));
-        studentList.add(new Student("Fieraru","David", "C"));
-        studentList.add(new Student("Popa","Antonia", "TI"));
-        studentList.add(new Student("Milea","Claudiu", "ISM"));
+        studentList.add(new Student("Popescu", "Marian", "225_3"));
+        studentList.add(new Student("Popescu", "Maria", "225_3"));
+        studentList.add(new Student("Popa", "Marian", "225_3"));
+        studentList.add(new Student("Bica", "Irina", "225_3"));
+        studentList.add(new Student("Badea", "Ion", "225_1"));
+        studentList.add(new Student("Cacoveanu", "Andreea", "225_1"));
+        studentList.add(new Student("Onofrei", "Mircea", "225_1"));
 
-        System.out.println("Sortati dupa grupa: \n");
-        studentList.sort(new Comparator<Student>() {
-            @Override
-            public int compare(Student o1, Student o2) {
-                int comp1 = o1.getGrupa().compareTo(o2.getGrupa());
-                if(comp1 == 0) {
-                    int comp2 = o1.getNume().compareTo(o2.getNume());
-                    if(comp2 == 0) {
-                        int comp3 = o1.getPrenume().compareTo(o2.getPrenume());
-                        return comp3;
-                    }
-                    return comp2;
-                }
-                return comp1;
-            }
-        });
+        System.out.println("Sortati crescator dupa grupa: \n");
+        studentList.sort(new ByGroupComparator());
         for(Student s: studentList) {
-            System.out.println(s + "\n\n");
+            System.out.println(s + "\n");
         }
 
-        System.out.println("Sortati dupa media notelor: ");
-        studentList.sort(new Comparator<Student>() {
-            @Override
-            public int compare(Student o1, Student o2) {
-                ArrayList<Integer> note1 = o1.getNote();
-                double medie1 = 0;
-                for (Integer i : note1) {
-                    medie1 = medie1 + i;
-                }
-                medie1 = medie1 / note1.size();
-
-                ArrayList<Integer> note2 = o1.getNote();
-                double medie2 = 0;
-                for (Integer i : note2) {
-                    medie2 = medie2 + i;
-                }
-                medie2 = medie2 / note2.size();
-
-                if(medie1 > medie2) {
-                    return 1;
-                }
-
-                if(medie1 < medie2) {
-                    return -1;
-                }
-
-                return 0;
+        ArrayList<Student> studentiIntegralisti = new ArrayList<>();
+        for(Student s : studentList) {
+            if(s.esteIntegralist()) {
+                studentiIntegralisti.add(s);
             }
-        });
+        }
+        System.out.println("Sortare studenti integralisti descrescator dupa media notelor: ");
+        studentiIntegralisti.sort(new ByGradesComparator());
+        for(Student s: studentiIntegralisti) {
+            System.out.println(s + "\n");
+        }
+
+        ArrayList<Student> studentiRestantieri = new ArrayList<>();
+        for(Student s : studentList) {
+            if(!s.esteIntegralist()) {
+                studentiRestantieri.add(s);
+            }
+        }
+        System.out.println("Sortare studenti restantieri crescator dupa numarul de restante:");
+        studentiRestantieri.sort(new ByFailedSubjectCountComparator());
+        for(Student s: studentiRestantieri) {
+            System.out.println(s + "\n");
+        }
     }
 
     public void main() {
